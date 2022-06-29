@@ -3,7 +3,7 @@ import UIKit
 /* A Swift Tour */
 print("Hello world")
 
-/* SIMPLE VALUES */
+/** SIMPLE VALUES **/
 var myVariable = 42
 myVariable = 50
 let myConstant = 42
@@ -61,4 +61,31 @@ occupations["Ian"] = "Public Relations"
 
 shoppingList = []
 occupations = [:]
+
+/** CONTROL FLOW **/
+let indiualScores = [75, 43, 103, 87, 12]
+var teamScore = 0
+for score in indiualScores {
+    if score > 50 {
+        teamScore += 3
+    } else {
+        teamScore += 1
+    }
+}
+print("Team score: \(teamScore)")
+
+var optionalString: String? = "Hello"
+print(optionalString == nil)
+// Prints "false"
+
+var optionalName: String? = "John Snow"
+var greeting = "Hello!"
+// optionalName = nil
+if let name = optionalName {
+    greeting = "Hello, \(name)!"
+}
+
+/* EXPERIMENT:
+ *
+ */
 
