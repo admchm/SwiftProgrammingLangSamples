@@ -86,6 +86,37 @@ if let name = optionalName {
 }
 
 /* EXPERIMENT:
- *
+ * Change optionalName to nil. What greeting do you get? Add an else clause that sets a different greeting if optionalName is nil.
  */
 
+var experimentalOptionalName: String? = nil
+if let name = experimentalOptionalName {
+    greeting = "Hello, \(name)!"
+} else {
+    greeting = "Hello, hmm..."
+}
+
+let nickname: String? = nil
+let fullName: String = "John Appleseed"
+let informalGreeting = "Hi \(nickname ?? fullName)"
+
+if let nickname {
+    print("Hey, \(nickname)")
+}
+
+let vegetable = "red pepper"
+switch vegetable {
+case "celery":
+    print("Add some raisins and make ants on a log.")
+case "cucumber", "watercress":
+    print("That would make a good tea sandwitch.")
+case let x where x.hasSuffix("pepper"):
+    print("Is it a spicy \(x)?")
+default:
+    print("Everything tastes good in soup.")
+}
+
+/*
+ * Try removing the default case. What error do you get?
+ */
+// - I'm getting Switch must be exhaustive
