@@ -119,4 +119,77 @@ default:
 /*
  * Try removing the default case. What error do you get?
  */
-// - I'm getting Switch must be exhaustive
+// - I'm getting "Switch must be exhaustive"
+
+let interestingNumbers = [
+    "Prime": [2, 3, 5, 7, 11, 13],
+    "Fibonacci": [1, 1, 2, 3, 5, 8],
+    "Square": [1, 4, 9, 16, 25],
+]
+
+var largest = 0
+for (_, numbers) in interestingNumbers {
+    for number in numbers {
+        if number > largest {
+            largest = number
+        }
+    }
+}
+print("largest = \(largest)")
+
+/* EXPERIMENT:
+ * Replace the _ with a variable name, and keep track of which kind of number was the biggest
+ */
+
+var dictResults: [String: Int] = [:]
+var biggest  = 0
+for (numberType, numbers) in interestingNumbers {
+    for number in numbers {
+        if number > biggest {
+            biggest = number
+            dictResults.updateValue(biggest, forKey: numberType)
+        }
+    }
+    biggest = 0
+}
+
+print("Biggest numbers in each category = \(dictResults)")
+
+var n = 2
+while n < 100 {
+    n *= 2
+}
+print(n)
+
+var m = 2
+repeat {
+    m *= 2
+} while m < 100
+print(m)
+            
+var total = 0
+for i in 0..<4 {
+    total += i
+}
+
+/** FUNCTIONS AND CLOSURES **/
+func greet(person: String, day: String) -> String {
+    return "Hello \(person), today is \(day)"
+}
+
+greet(person: "Mark", day: "Monday")
+
+/* EXPERIMENT:
+ * Remove the day parameter. Add a parameter to include today's lunch special in the greeting.
+ */
+func greeting(person: String, lunchSpecial: String) -> String {
+    return "Hello \(person), today's lunch special is \(lunchSpecial)"
+}
+
+greeting(person: "Paul", lunchSpecial: "pizza")
+
+func newGreet(_ person: String, on day: String) -> String {
+    return "Hello \(person), today is \(day)"
+}
+
+newGreet("Bart", on: "Friday")
