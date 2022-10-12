@@ -405,5 +405,58 @@ circle.simpleDescription()
 
 // getter and setter
 class EquilateralTriangle: NamedShape {
+    var sideLength: Double = 0
     
+    init(sideLength: Double, name: String) {
+        self.sideLength = sideLength
+        super.init(name: name)
+        numberOfSides = 3
+    }
+    
+    var perimeter: Double {
+        get {
+            return 3.0 * sideLength
+        }
+        set {
+            sideLength = newValue / 3.0
+        }
+    }
+    
+    override func simpleDescription() -> String {
+        return "An equaliteral triangle with sides of lenght \(sideLength)"
+    }
 }
+
+var triangle = EquilateralTriangle(sideLength: 1.0, name: "a triangle")
+print(triangle.perimeter)
+
+triangle.perimeter = 9.9
+print(triangle.sideLength)
+
+// willSet
+class TriangleAndSquare {
+    var triangle: EquilateralTriangle {
+        willSet {
+            square.sideLength = newValue.sideLength
+        }
+    }
+    var square: Square {
+        willSet {
+            square.sideLength = newValue.sideLength
+        }
+    }
+    
+    init(size: Double, name: String) {
+        square = Square(sideLength: size, name: name)
+        triangle = EquilateralTriangle(sideLength: size, name: name)
+    }
+}
+
+var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+print(triangleAndSquare.triangle.sideLength)
+print(triangleAndSquare.square.sideLength)
+triangleAndSquare.square = Square(sideLength: 2, name: "some square")
+
+//let optionalSquare = Square? = Square(sideLength: 1, name: "optional square")
+//let sideLenght = optionalSquare?.sideLength
+
