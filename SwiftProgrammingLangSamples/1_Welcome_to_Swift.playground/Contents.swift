@@ -460,3 +460,61 @@ triangleAndSquare.square = Square(sideLength: 2, name: "some square")
 //let optionalSquare = Square? = Square(sideLength: 1, name: "optional square")
 //let sideLenght = optionalSquare?.sideLength
 
+/** ENUMERATIONS AND STRUCTURES **/
+enum Rank: Int {
+    case ace = 1
+    case two, three, four, five, six, seven, eight, nine, ten
+    case jack, queen, king
+    
+    func simpleDescription() -> String {
+        switch self {
+        case .ace:
+            return "ace"
+        case .jack:
+            return "jack"
+        case .queen:
+            return "queen"
+        case .king:
+            return "king"
+        default:
+            return String(self.rawValue)
+        }
+    }
+}
+let ace = Rank.ace
+let aceRawValue = ace.rawValue
+
+/* EXPERIMENT:
+ * Write a function that compares two Rank Values by comparing their raw values
+ */
+func compareTwoRankValues(firstVal: Rank, secondVal: Rank) -> String {
+    let isFirstValHigher = firstVal.rawValue > secondVal.rawValue ? true : false
+    let statement = isFirstValHigher ? "higher" : "lower"
+    
+    return "\(firstVal) is \(statement) from \(secondVal)"
+}
+
+compareTwoRankValues(firstVal: Rank.four, secondVal: Rank.five)
+
+if let convertedRank = Rank(rawValue: 3) {
+    let threeDescription = convertedRank.simpleDescription()
+}
+
+enum Suit {
+    case spades, hearts, diamonds, clubs
+    
+    func simpleDescription() -> String {
+        switch self {
+        case .spades:
+            return "spades"
+        case .hearts:
+            return "hearts"
+        case .diamonds:
+            return "diamonds"
+        case .clubs:
+            return "clubs"
+        }
+    }
+}
+let hearts = Suit.hearts
+let heartsDescription = hearts.simpleDescription()
