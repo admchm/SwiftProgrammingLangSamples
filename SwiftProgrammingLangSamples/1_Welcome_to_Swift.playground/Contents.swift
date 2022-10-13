@@ -518,3 +518,120 @@ enum Suit {
 }
 let hearts = Suit.hearts
 let heartsDescription = hearts.simpleDescription()
+
+/* EXPERIMENT:
+ * Add a color() method to Suit that return "black" for spades and clubs, and returns "red" for hearts and diamonds.
+ */
+enum SuitExpanded {
+    case spades, hearts, diamonds, clubs
+    
+    func color() -> String {
+        switch self {
+        case .spades, .clubs:
+            return "black"
+        case .hearts, .diamonds:
+            return "red"
+        }
+    }
+}
+
+let blackColor = SuitExpanded.spades.color()
+let redColor = SuitExpanded.hearts.color()
+
+enum ServerResponse {
+    case result(String, String)
+    case info(String)
+    case failure(String)
+}
+    
+    let success = ServerResponse.result("06:00AM", "07:09PM")
+    let description = ServerResponse.info("This structure returns hours for sunrise and sunset")
+    let failure = ServerResponse.failure("Out of cheese")
+    
+    switch success {
+    case let .result(sunrise, sunset):
+        print("Sunrise is at \(sunrise) and sunset is at \(sunset).")
+    case let .info(description):
+        print("Info: \(description)")
+    case let .failure(message):
+        print("Failure... \(message)")
+}
+
+struct Card {
+    var rank: Rank
+    var suit: Suit
+    
+    func simpleDescription() -> String {
+        return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+    }
+}
+
+let threeOfSpades = Card(rank: .ace, suit: .clubs)
+let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+
+/* EXPERIMENT:
+ * Write a function that returns an array containing a full deck of cards, with one card of each combination of rank and suit
+ */
+enum SuitOfCards: String, CaseIterable {
+    case spades, hearts, diamonds, clubs
+    
+    func simpleDescription() -> String {
+        switch self {
+        case .spades:
+            return "spades"
+        case .hearts:
+            return "hearts"
+        case .diamonds:
+            return "diamonds"
+        case .clubs:
+            return "clubs"
+        }
+    }
+}
+
+enum RankOfCards: String, CaseIterable {
+    case ace
+    case two, three, four, five, six, seven, eight, nine, ten
+    case jack, queen, king
+    
+    func simpleDescription() -> String {
+        switch self {
+        case .ace:
+            return "ace"
+        case .jack:
+            return "jack"
+        case .queen:
+            return "queen"
+        case .king:
+            return "king"
+        default:
+            return String(self.rawValue)
+        }
+    }
+}
+
+func fullDeckOfCards() -> Array<(String, String)> {
+    var arrayOfRanks: [String] = RankOfCards.allCases.map { $0.rawValue }
+    print(arrayOfRanks)
+    
+    var arrayOfSuits: [String] = SuitOfCards.allCases.map { $0.rawValue }
+    print(arrayOfSuits)
+    
+    var arrayOfCards: Array<(String, String)> = Array()
+    
+    for rank in arrayOfRanks {
+        for suit in arrayOfSuits {
+            
+            let card = (rank, suit)
+            arrayOfCards.append(card)
+        }
+    }
+    print("Array of cards = \(arrayOfCards)")
+    
+    return arrayOfCards
+}
+
+let testVar = fullDeckOfCards()
+/*
+ Array of cards = [("ace", "spades"), ("ace", "hearts"), ("ace", "diamonds"), ("ace", "clubs"), ("two", "spades"), ("two", "hearts"), ("two", "diamonds"), ("two", "clubs"), ("three", "spades"), ("three", "hearts"), ("three", "diamonds"), ("three", "clubs"), ("four", "spades"), ("four", "hearts"), ("four", "diamonds"), ("four", "clubs"), ("five", "spades"), ("five", "hearts"), ("five", "diamonds"), ("five", "clubs"), ("six", "spades"), ("six", "hearts"), ("six", "diamonds"), ("six", "clubs"), ("seven", "spades"), ("seven", "hearts"), ("seven", "diamonds"), ("seven", "clubs"), ("eight", "spades"), ("eight", "hearts"), ("eight", "diamonds"), ("eight", "clubs"), ("nine", "spades"), ("nine", "hearts"), ("nine", "diamonds"), ("nine", "clubs"), ("ten", "spades"), ("ten", "hearts"), ("ten", "diamonds"), ("ten", "clubs"), ("jack", "spades"), ("jack", "hearts"), ("jack", "diamonds"), ("jack", "clubs"), ("queen", "spades"), ("queen", "hearts"), ("queen", "diamonds"), ("queen", "clubs"), ("king", "spades"), ("king", "hearts"), ("king", "diamonds"), ("king", "clubs")]
+ */
