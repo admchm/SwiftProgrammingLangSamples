@@ -635,3 +635,127 @@ let testVar = fullDeckOfCards()
 /*
  Array of cards = [("ace", "spades"), ("ace", "hearts"), ("ace", "diamonds"), ("ace", "clubs"), ("two", "spades"), ("two", "hearts"), ("two", "diamonds"), ("two", "clubs"), ("three", "spades"), ("three", "hearts"), ("three", "diamonds"), ("three", "clubs"), ("four", "spades"), ("four", "hearts"), ("four", "diamonds"), ("four", "clubs"), ("five", "spades"), ("five", "hearts"), ("five", "diamonds"), ("five", "clubs"), ("six", "spades"), ("six", "hearts"), ("six", "diamonds"), ("six", "clubs"), ("seven", "spades"), ("seven", "hearts"), ("seven", "diamonds"), ("seven", "clubs"), ("eight", "spades"), ("eight", "hearts"), ("eight", "diamonds"), ("eight", "clubs"), ("nine", "spades"), ("nine", "hearts"), ("nine", "diamonds"), ("nine", "clubs"), ("ten", "spades"), ("ten", "hearts"), ("ten", "diamonds"), ("ten", "clubs"), ("jack", "spades"), ("jack", "hearts"), ("jack", "diamonds"), ("jack", "clubs"), ("queen", "spades"), ("queen", "hearts"), ("queen", "diamonds"), ("queen", "clubs"), ("king", "spades"), ("king", "hearts"), ("king", "diamonds"), ("king", "clubs")]
  */
+
+/** CONCURRENCY **/
+func fetchUserID(from server: String) async -> Int {
+    if server == "primary" {
+        return 97
+    }
+    return 501
+}
+
+func fetchUsername(from server: String) async -> String {
+    let userID = await fetchUserID(from: server)
+    
+    if userID == 501 {
+        return "John Appleseed"
+    }
+    return "Guest"
+}
+
+func connectUser(to server: String) async {
+    async let userID = fetchUserID(from: server)
+    async let username = fetchUsername(from: server)
+    
+    let greeting = await "Hello \(username), user ID \(userID)"
+    print(greeting)
+}
+
+Task {
+    await connectUser(to: "primary")
+}
+
+/** PROTOCOLS AND EXTENSIONS **/
+protocol ExampleProtocol {
+    var simpleDescription: String { get }
+    mutating func adjust()
+}
+
+class SimpleClass: ExampleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+
+    func adjust() {
+        simpleDescription += " Now 100% adjusted."
+    }
+}
+
+var a = SimpleClass()
+a.adjust()
+
+struct SimpleStructure: ExampleProtocol {
+    var simpleDescription: String = "A simple structure."
+    
+    mutating func adjust() {
+        simpleDescription += " (adjusted)"
+    }
+}
+
+var b = SimpleStructure()
+b.adjust()
+
+/* EXPERIMENT:
+ * Add another requirement to ExampleProtocol. What changes do you need to make to SimpleClass and SimpleStructure so that they still conform to the protocol
+ */
+// ANSWER: We need to make sure that both SimpleClass and SimpleStructure are implementing the requirement that was added (in this case, "anotherProperty")
+
+protocol ExtendedSimpleProtocol {
+    var simpleDescription: String { get }
+    var anotherProperty: Int { get }
+    mutating func adjust()
+}
+
+class ExtendedSimpleClass: ExtendedSimpleProtocol {
+    var simpleDescription: String = "A very simple class."
+    var anotherProperty: Int = 69105
+
+    func adjust() {
+        simpleDescription += " Now 100% adjusted. Current anotherProperty equals \(anotherProperty)"
+    }
+}
+
+var c = SimpleClass()
+c.adjust()
+
+struct ExtendedSimpleStructure: ExtendedSimpleProtocol {
+    var simpleDescription: String = "A simple structure."
+    var anotherProperty: Int = 525252
+    mutating func adjust() {
+        simpleDescription += " (adjusted). Current anotherProperty equals \(anotherProperty)"
+    }
+}
+
+var d = SimpleStructure()
+d.adjust()
+
+
+extension Int: ExampleProtocol {
+    var simpleDescription: String {
+        return "The number \(self)"
+    }
+    
+    mutating func adjust() {
+        self += 42
+    }
+}
+print(7.simpleDescription)
+
+/* EXPERIMENT:
+ * Write an extension for Double type that adds an absoluteValue property
+ */
+
+extension Double {
+    func absoluteValue() -> Double {
+        var value = self
+        value = value < 0 ? value * -1 : value
+        
+        return value as Double
+    }
+}
+
+var experimentalDouble: Double = -70.0
+print("Absolute value of experimentalDouble: \(String(describing: experimentalDouble.absoluteValue))")
+
+let protocolValue: ExampleProtocol = a
+print(protocolValue.simpleDescription)
+// protocolValue.anotherProperty
