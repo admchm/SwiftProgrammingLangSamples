@@ -759,3 +759,121 @@ print("Absolute value of experimentalDouble: \(String(describing: experimentalDo
 let protocolValue: ExampleProtocol = a
 print(protocolValue.simpleDescription)
 // protocolValue.anotherProperty
+
+
+/** ERROR HANDLING  **/
+enum PrinterError: Error {
+    case outOfPaper
+    case noToner
+    case onFire
+}
+
+func send(job: Int, toPrinter printName: String) throws -> String {
+    if printName == "Never Has Toner" {
+        throw PrinterError.noToner
+    }
+    return "Job sent"
+}
+
+try send(job: 1, toPrinter: "Has Toner")
+// unhandled: try send(job: 2, toPrinter: "Never Has Toner")
+
+do {
+    let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
+    // let printerResponse = try send(job: 2, toPrinter: "Never Has Toner")
+    print(printerResponse)
+} catch {
+    print(error)
+}
+
+do {
+    // let printerResponse = try send(job: 1440, toPrinter: "Gutenberg")
+    let printerResponse = try send(job: 2, toPrinter: "Never Has Toner")
+    print(printerResponse)
+} catch PrinterError.onFire {
+    print("I'll just put this over here, with the rest of the fire")
+} catch let printerError as PrinterError {
+    print("Printer error: \(printerError)")
+} catch {
+    print(error)
+}
+
+
+let printerSuccess = try? send(job: 1884, toPrinter: "Mergenthaler")
+let printerFailure = try? send(job: 1885, toPrinter: "Never Has Toner")
+
+
+var fridgeIsOpen = false
+let fridgeContent = ["milk", "eggs", "leftovers"]
+
+func fridgeContains(food: String) -> Bool {
+    fridgeIsOpen = true
+    defer {
+        fridgeIsOpen = false
+    }
+    
+    let result = fridgeContent.contains(food)
+    return result
+}
+
+fridgeContains(food: "banana")
+print("fridgeIsOpen = \(fridgeIsOpen)")
+
+
+/** GENERICS **/
+func makeArray<Item>(repeating item: Item, numberOfTimes: Int) -> [Item] {
+    var result: [Item] = []
+    for _ in 0..<numberOfTimes {
+        result.append(item)
+    }
+    return result
+}
+
+makeArray(repeating: "knock", numberOfTimes: 4)
+makeArray(repeating: 1, numberOfTimes: 3)
+
+
+enum OptionalValue<Wrapped> {
+    case none
+    case some(Wrapped)
+}
+
+var possibleInteger: OptionalValue<Int> = .none
+possibleInteger = .some(100)
+
+
+func anyCommonElements<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> Bool
+    where T.Element: Equatable, T.Element == U.Element
+{
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+anyCommonElements([1, 2, 3], [2, 3])
+
+/* EXPERIMENT:
+ * Modify anyCommonElements(_:_:) function to make a function that returns an array of the elements that any two sequences have in common
+ */
+
+func anyCommonSequences<T: Sequence, U: Sequence>(_ lhs: T, _ rhs: U) -> [Any]
+    where T.Element: Equatable, T.Element == U.Element
+{
+    var commonValues = [Any]()
+    
+    for lhsItem in lhs {
+        for rhsItem in rhs {
+            if lhsItem == rhsItem {
+                commonValues.append(lhsItem)
+            }
+        }
+    }
+    return commonValues
+}
+
+anyCommonSequences([1, 2, 3, 4, 5, 6, 7, 8], [6, 7])
