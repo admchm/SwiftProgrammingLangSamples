@@ -150,10 +150,121 @@ serverResponseCode = nil
 // without default value, optional variable is set to nil
 var surveyAnswer: String?
 
+
+// IF STATEMENTS AND FORCED UNWRAPPING
+if convertedNumber != nil {
+    print("convertedNumber contains some integer value.")
+}
+
+if convertedNumber != nil {
+    print("convertedNumber contains integer value of \(convertedNumber!).")
+}
+
+// OPTIONAL BINDING
+if let actualNumber = Int(possibleNumber) {
+    print("The string \(possibleNumber) has an integer value of \(actualNumber)")
+} else {
+    print("The string \(possibleNumber) couldn't be converted to an integer")
+}
+
+let myNumber = Int(possibleNumber)
+if let myNumber = myNumber {
+    print("myNumber is \(myNumber).")
+}
+
+if let myNumber {
+    print("myNumber is \(myNumber)")
+}
+
+if let firstNumber = Int("4"), let secondNumber = Int("42"), firstNumber < secondNumber && secondNumber < 100 {
+    print("\(firstNumber) < \(secondNumber) < 100")
+}
+
+if let firstNumber = Int("4") {
+    if let secondNumber = Int("42") {
+        if firstNumber < secondNumber && secondNumber < 100 {
+            print("\(firstNumber) < \(secondNumber) < 100")
+        }
+    }
+}
+
+// NOTE:
+// Constants and variables created with optional binding in an if statement are available only within the body of the if statement.
+// In contrast, the constants and variables created with guard statement are available in the lines of code that follow the guard
+// statement.
+
+// IMPLICITLY UNWRAPPED OPTIONALS
+let possibleString: String? = "An optional string."
+let forcingString: String = possibleString!
+
+let assumedString: String! = "An implicitly unwrapped optional string."
+let implicitString: String = assumedString
+
+let optionalString = assumedString
+if assumedString != nil {
+    print(assumedString!)
+}
+
+if let definiteString = assumedString {
+    print(definiteString)
+}
+
 /** ERROR HANDLING **/
+func canThrowAnError() throws {
+    // this function may or may not throw an error
+    // when you call a function that can throw an error, you prepend the try keyword to the expression
+}
+
+do {
+    try canThrowAnError()
+    // no error was thrown
+} catch {
+    // an error was thrown
+}
+
+// example
+/*
+func makeASandwich() throws {
+    // ...
+}
+
+do {
+    try makeASandwich()
+    eatASandwitch()
+} catch SandwitchError.missingIngredients(let ingredients) {
+    buyGroceries(ingredients)
+}
+*/
 
 /** ASSERTIONS AND PRECONDITIONS **/
+// Difference: Assertions are checked only in debug builds, but preconditions are checked in both debug and production builds.
+// In production builds, condition inside an assertion isn't evaluated.
 
+// DEBUGGING WITH ASSERTIONS
+// assert(_:_:filename:line:)
+let age = -3
+// assert(age >= 0, "A person's age can't be less than zero.")
+// error: Execution was interrupted, reason: EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)
 
+// ommitting message
+// assert(age >= 0)
 
+if age > 10 {
+    print("You can ride the roller-coaster or the ferris wheel.")
+} else if age >= 0 {
+    print("You can ride the ferris wheel.")
+} else {
+    assertionFailure("A person's age can't be less than zero.")
+}
 
+// ENFORCING PRECONDITIONS
+// precondition(_:_:file:line)
+
+// example - in the implementation of a subscript...
+// precondition(index > 0, "Index must be greater than zero.")
+
+// NOTE:
+// If you compile in unchecked mode (-0unchecked), preconditions aren't checked.
+// However, the fatalError(_:file:line:) function always halts execution
+// You can use the fatalError(...) function during prototyping and early development to create stubs for functionality that
+// hasn't been implemented yet by writing fatalError() as the stubs implementation.
