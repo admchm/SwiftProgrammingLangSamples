@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		46F5BA672965B09500DEEFC4 /* 5_Collection_Types.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 5_Collection_Types.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CF11A2FC2906BDBF00A9514A /* 2_The_Basics.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 2_The_Basics.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CFAF28BF2912BD09004D2AD7 /* 3_Basic_Operators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 3_Basic_Operators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CFAF28C029140EC3004D2AD7 /* 4_Strings_and_characters.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 4_Strings_and_characters.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -21,6 +22,7 @@
 				CF11A2FC2906BDBF00A9514A /* 2_The_Basics.playground */,
 				CFAF28BF2912BD09004D2AD7 /* 3_Basic_Operators.playground */,
 				CFAF28C029140EC3004D2AD7 /* 4_Strings_and_characters.playground */,
+				46F5BA672965B09500DEEFC4 /* 5_Collection_Types.playground */,
 			);
 			sourceTree = "<group>";
 		};
