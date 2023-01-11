@@ -9,6 +9,9 @@
 /* Begin PBXFileReference section */
 		46F5BA672965B09500DEEFC4 /* 5_Collection_Types.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 5_Collection_Types.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46F5BA692966C2A900DEEFC4 /* 6_Control_flow.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 6_Control_flow.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46F5BA6A296D5D6500DEEFC4 /* 7_Functions.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 7_Functions.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46F5BA6B296D5D9500DEEFC4 /* 8_Closures.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 8_Closures.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46F5BA6C296D5DC700DEEFC4 /* 9_Enumerations.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 9_Enumerations.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CF11A2FC2906BDBF00A9514A /* 2_The_Basics.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 2_The_Basics.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CFAF28BF2912BD09004D2AD7 /* 3_Basic_Operators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 3_Basic_Operators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		CFAF28C029140EC3004D2AD7 /* 4_Strings_and_characters.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 4_Strings_and_characters.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -19,12 +22,15 @@
 		CFFC98F0286AD7C0009F199C = {
 			isa = PBXGroup;
 			children = (
-				46F5BA692966C2A900DEEFC4 /* 6_Control_flow.playground */,
 				CFFC98F7286AD802009F199C /* 1_Welcome_to_Swift.playground */,
 				CF11A2FC2906BDBF00A9514A /* 2_The_Basics.playground */,
 				CFAF28BF2912BD09004D2AD7 /* 3_Basic_Operators.playground */,
 				CFAF28C029140EC3004D2AD7 /* 4_Strings_and_characters.playground */,
 				46F5BA672965B09500DEEFC4 /* 5_Collection_Types.playground */,
+				46F5BA692966C2A900DEEFC4 /* 6_Control_flow.playground */,
+				46F5BA6A296D5D6500DEEFC4 /* 7_Functions.playground */,
+				46F5BA6B296D5D9500DEEFC4 /* 8_Closures.playground */,
+				46F5BA6C296D5DC700DEEFC4 /* 9_Enumerations.playground */,
 			);
 			sourceTree = "<group>";
 		};
