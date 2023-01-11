@@ -187,36 +187,97 @@ func arithmeticMean(_ numbers: Double...) -> Double {
 arithmeticMean(1.0, 2.0, 3.0, 4.0, 5.0)
 
 // IN-OUT PARAMETERS
+// If we want to change the parameter of a function (which by default is constant),
+// use in-out parameters
+// we need to also add & to the argument that will be passed to a function that uses in-out params
 
+var firstVal = 10
+var secondVal = 5
 
+func swapTwoInts(a: inout Int, b: inout Int) {
+    let temporaryA = a
+    a = b
+    b = temporaryA
+}
+print("Before swapping values - first value \(firstVal), second value \(secondVal)")
+swapTwoInts(a: &firstVal, b: &secondVal)
+print("After swapping values - first value \(firstVal), second value \(secondVal)")
 
-
-
-
-
-
+// testing on my own
+func testInout(firstParam: inout Int, secondParam: Int) {
+    firstParam = secondParam + 50
+}
+testInout(firstParam: &firstVal, secondParam: secondVal)
+print("After swapping values - first value \(firstVal), second value \(secondVal)")
 
 /** FUNCTION TYPES  **/
 
+// (Int, Int) -> Int
+// or
+// a function that has two parameters, both type of Int, and that returns a value of type Int
+func addTwoInts(_ a: Int, _ b: Int) -> Int {
+    return a + b
+}
+
+// (Int, Int) -> Int
+// or
+// a function that has two parameters, both type of Int, and that returns a value of type Int
+func multiplyTwoInts(_ a: Int, _ b: Int) -> Int {
+    return a * b
+}
+
+// () -> Void
+// or
+// a function that has no parameters, and returns Void
+func printHelloWorld() {
+    print("Hello, world!")
+}
 
 // USING FUNCTION TYPES
+// function type
+var mathFunction: (Int, Int) -> Int = addTwoInts
+mathFunction(2, 3)
 
+mathFunction = multiplyTwoInts
+mathFunction(10, 2)
+
+let anotherMathFunction = addTwoInts
+let someFunc = anotherGreeting
+let minMaxFunc = minMaxOpt
 
 // FUNCTION TYPES AS PARAMETER TYPES
+func printMathResult(_ mathFunction: (Int, Int) -> Int, _ a: Int, _ b: Int) {
+    print("Result: \(mathFunction(a, b))")
+}
 
+printMathResult(addTwoInts, 2, 2)
 
 // FUNCTION TYPES AS RETURN TYPES
 
+func stepForward(_ input: Int) -> Int {
+    return input + 1
+}
 
+func stepBackward(_ input: Int) -> Int {
+    return input - 1
+}
 
+func chooseStepFunction(backward: Bool) -> (Int) -> Int {
+    return backward ? stepBackward : stepForward
+}
 
+var val = 3
+let moveNearerToZeroVal = chooseStepFunction(backward: val > 0)
+// moveNearerToZero now refers to the stepBackward() function
 
-
-
+while val != 0 {
+    print("Current value: \(val)")
+    val = moveNearerToZeroVal(val)
+}
 
 /** NESTED FUNCTIONS **/
-func chooseStepFunction(backward: Bool) -> (Int) -> Int {
-    func stepForward(input: Int) -> Int { print("bb"); return input + 1 }
+func chooseStepFunctions(backward: Bool) -> (Int) -> Int {
+    func stepForward(input: Int) -> Int { print("test"); return input + 1 }
     func stepBackward(input: Int) -> Int { return input - 1 }
     return backward ? stepBackward : stepForward
 }
