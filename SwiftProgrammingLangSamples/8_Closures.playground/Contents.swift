@@ -194,9 +194,9 @@ func makeIncrementer(forIncrement amount: Int) -> () -> Int {
     return incrementer
 }
 
-let inc50 = makeIncrementer(forIncrement: 50)
-inc50()
-inc50()
+let incrementByFifty = makeIncrementer(forIncrement: 50)
+incrementByFifty()
+incrementByFifty()
 
 // If you assign a closure to a property of a class instance, and the closure captures that
 // instance by referring to the instance or its members, you will create a strong reference
@@ -207,5 +207,128 @@ inc50()
 // Closures and functions are reference types
 // This means that if you assign a closure to constant or variable, it will refer to the
 // closure.
-let alsoIncrementBy50 = inc50()
-inc50()
+let alsoIncrementByFifty = incrementByFifty()
+incrementByFifty()
+
+/** ESCAPING CLOSURES **/
+
+// A closure is said to escape a function when the closure is passed as an argument to the
+// function, but it's called.
+// When you declare a function that takes a closure as one of its parameters, you can write
+// @escaping before the parameter's type to indicate that the closure is allowed to escape.
+
+// One way that a closure can escape is by being stored in a variable that's defined outside
+// the function. As an example, many functions that start an asynchronous operation take
+// a closure argument as a completion handler. The function returns after it starts the
+// operation, but the closure isn't called until the operation is completed -- the closure
+// needs to escape, to be called later.
+
+var completionHandlers: [() -> Void] = []
+
+func someFunctionWithEscapingClosure(completionHandler: @escaping () -> Void) {
+    completionHandlers.append(completionHandler)
+}
+
+// An escaping closure that refers to self needs special consideration if self refers to
+// an instance of a class. Capturing self in escaping closure makes it easy to accidentally
+// create a strong reference cycle.
+
+// Normally, a closure captures variables implicitly by using them in the body of the
+// closure, but in this case you need to be explicit. If you want to capture 'self',
+// write 'self' explicitly when you use it, or include self in the closure's capture list.
+// Writing 'self' explicitly lets you express your intent, and reminds you to confirm that
+// there isn't a reference cycle. For example, in the code below, the closure passed to
+// someFunctionWithEscapingClosure(_:) refers to self explicitly. In contrast, the closure
+// passed to someFunctionWithNonescapingClosure(_:) is a nonescaping closure, which means
+// it can refer to self implicitly.
+
+func someFunctionWithNonescapingClosure(closure: () -> Void) {
+    closure()
+}
+
+class SomeClass {
+    var x = 10
+    
+    func doSomething() {
+        someFunctionWithEscapingClosure { self.x = 100 }
+        someFunctionWithNonescapingClosure { x = 200 }
+    }
+}
+
+let instance = SomeClass()
+instance.doSomething()
+print(instance.x)
+
+completionHandlers.first?()
+print(instance.x)
+
+// Here's a version of doSomething() that captures self by including it in closure's
+// capture list, and then refers to self implicitly:
+
+class SomeOtherClass {
+    var x = 10
+    
+    func doSomething() {
+        someFunctionWithEscapingClosure { [self] in x = 100 }
+        someFunctionWithNonescapingClosure { x = 200 }
+    }
+}
+
+// If self is an instance of a structure or an enumeration, you can always refer to
+// self implicitly. However, an escaping closure can't capture a mutable reference
+// to self when self is an instance of a structure or an enumeration.
+
+/*
+struct SomeDifferentStruct {
+    var x = 10
+    mutating func doSomething() {
+        someFunctionWithNonescapingClosure { x = 100 } // OK
+        someFunctionWithEscapingClosure { x = 100 }    // ERROR
+    }
+}
+*/
+
+/** AUTOCLOSURES **/
+// An autoclosure is a closure that's automatically created to wrap an expression
+// that's being passed as an argument to a function.
+
+// An autoclosure lets you delay evaluation, because the code inside isn't run until
+// you call the closure.
+
+var customerInLine = ["Chris", "Alex", "Ewa", "Barry", "Daniella"]
+print(customerInLine.count)
+
+let customerProvider = { customerInLine.remove(at: 0) }
+print(customerInLine.count)
+
+print("Now serving \(customerProvider())!")
+print(customerInLine.count)
+
+
+func serve(customer customerProvider: () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+
+serve(customer: { customerInLine.remove(at: 0) } )
+
+func serve(customer customerProvider: @autoclosure () -> String) {
+    print("Now serving \(customerProvider())!")
+}
+
+serve(customer: customerInLine.remove(at: 0))
+
+// If you want an autoclosure that's allowed to escape, use both the @autoclosure
+// and @escaping attributes
+
+var customerProviders: [() -> String] = []
+func collectCustomerProviders(_ customerProvider: @autoclosure @escaping () -> String) {
+    customerProviders.append(customerProvider)
+}
+collectCustomerProviders(customerInLine.remove(at: 0))
+collectCustomerProviders(customerInLine.remove(at: 0))
+
+print("Collected  \(customerProviders.count) closures.")
+
+for customerProvider in customerProviders {
+    print("Now serving \(customerProvider())!")
+}
