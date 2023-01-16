@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		46D829D829753616005D7F42 /* 10_Structures_and_Classes.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 10_Structures_and_Classes.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46D829D929753633005D7F42 /* 11_Properties.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 11_Properties.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46D829DA2975365E005D7F42 /* 12_Methods.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 12_Methods.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46D829DB2975368B005D7F42 /* 13_Subscripts.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 13_Subscripts.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46D829DC297536A8005D7F42 /* 14_Inheritance.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 14_Inheritance.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46F5BA672965B09500DEEFC4 /* 5_Collection_Types.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 5_Collection_Types.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46F5BA692966C2A900DEEFC4 /* 6_Control_flow.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 6_Control_flow.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46F5BA6A296D5D6500DEEFC4 /* 7_Functions.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 7_Functions.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -31,6 +36,11 @@
 				46F5BA6A296D5D6500DEEFC4 /* 7_Functions.playground */,
 				46F5BA6B296D5D9500DEEFC4 /* 8_Closures.playground */,
 				46F5BA6C296D5DC700DEEFC4 /* 9_Enumerations.playground */,
+				46D829D829753616005D7F42 /* 10_Structures_and_Classes.playground */,
+				46D829D929753633005D7F42 /* 11_Properties.playground */,
+				46D829DA2975365E005D7F42 /* 12_Methods.playground */,
+				46D829DB2975368B005D7F42 /* 13_Subscripts.playground */,
+				46D829DC297536A8005D7F42 /* 14_Inheritance.playground */,
 			);
 			sourceTree = "<group>";
 		};
