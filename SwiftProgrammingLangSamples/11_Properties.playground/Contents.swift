@@ -185,4 +185,249 @@ stepCounter.totalSteps = 250
 stepCounter.totalSteps = 50
 
 /** PROPERTY WRAPPERS **/
-// TODO: finish the rest of the chapter
+// Property wrapper adds a layer of separation between code that manages
+// how a property is stored and the code. When you use a property wrapper,
+// you write a management code once when you define a wrapper, and then reuse
+// that management code by applying it to multiple properties.
+
+// TODO: - Something in this section might be broken, so it will need to be fixed
+
+@propertyWrapper
+struct TwelveOrLess {
+    private var number = 0
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, 12) }
+    }
+}
+
+struct SmallRectangle {
+    @TwelveOrLess var height: Int
+    @TwelveOrLess var width: Int
+}
+
+var rectangle = SmallRectangle()
+print(rectangle.height)
+
+rectangle.height = 20
+print(rectangle.height)
+
+// We could write a code that uses the behavior of a property wrapper, without
+// taking advantage of the special attribute syntax. Look at this in contrast to
+// SmallRectangle struct implementation
+
+struct SmallerRectangle {
+    private var _height = TwelveOrLess()
+    private var _width = TwelveOrLess()
+    var height: Int {
+        get { return _height.wrappedValue }
+        set { _height.wrappedValue = newValue }
+    }
+    
+    var width: Int {
+        get { return _width.wrappedValue }
+        set { _width.wrappedValue = newValue }
+    }
+}
+
+// SETTING INITIAL VALUES FOR WRAPPED PROPERTIES
+// To support setting an initial value or other customisation, the property wrapper
+// needs to add an initializer.
+
+@propertyWrapper
+struct SmallNumber {
+    private var maximum: Int = 0
+    private var number = 0
+    
+    var wrappedValue: Int {
+        get { return number }
+        set { number = min(newValue, maximum) }
+    }
+    
+    init() {
+        maximum = 12
+        number = 0
+    }
+    
+    init(wrappedValue: Int) {
+        maximum = 12
+        number = min(wrappedValue, maximum)
+    }
+    
+    init(wrappedValue: Int, maximum: Int) {
+        self.maximum = maximum
+        number = min(wrappedValue, maximum)
+    }
+}
+
+// When we apply a wrapper to a property and you don't specify an inital
+// value, Swift uses the init() initalizer to set up the wrapper.
+struct ZeroRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+}
+
+var zeroRectangle = ZeroRectangle()
+print("\(zeroRectangle.height) \(zeroRectangle.width)")
+
+struct UnitRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber var width: Int = 1
+}
+
+var unitRectangle = UnitRectangle()
+print("\(unitRectangle.height) \(unitRectangle.width)")
+
+// When we write arguments in parentheses after the custom attribute, Swift
+// uses the initializer that accepts those arguments to set up the wrapper.
+// This syntax is the most general to use a property wrapper.
+
+struct NarrowRectangle {
+    @SmallNumber(wrappedValue: 2, maximum: 5) var height: Int
+    @SmallNumber(wrappedValue: 3, maximum: 4) var width: Int
+}
+
+var narrowRectangle = NarrowRectangle()
+print("\(unitRectangle.height) \(unitRectangle.width)")
+
+narrowRectangle.height = 100
+narrowRectangle.width = 100
+
+// When you include property wrapper arguments, we can also specify an initial
+// value using assignment. Swift treats the assignment like a wrappedValue
+// argument and uses the initializer that accepts the arguments we include.
+struct MixedRectangle {
+    @SmallNumber var height: Int = 1
+    @SmallNumber(maximum: 9) var width: Int = 2
+}
+
+var mixedRectangle = MixedRectangle()
+print("\(mixedRectangle.height)")
+
+mixedRectangle.height = 20
+print("\(mixedRectangle.height)")
+
+// PROJECTING A VALUE FROM A PROPERTY WRAPPER
+@propertyWrapper
+struct SmallerNumber {
+    private var number: Int
+    private(set) var projectedValue:Bool
+    
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue > 12 {
+                number = 12
+                projectedValue = true
+            } else {
+                number = newValue
+                projectedValue = false
+            }
+        }
+    }
+    
+    init() {
+        self.number = 0
+        self.projectedValue = false
+    }
+}
+
+struct SomeOtherStructure {
+    @SmallNumber var someNumber: Int
+}
+
+var someOtherStructure = SomeOtherStructure()
+
+someOtherStructure.someNumber = 4
+// print(someOtherStructure.$someNumber) // TODO: Value of type 'SomeOtherStructure' has no member '$someNumber'
+
+enum SizeVariation {
+    case small, large
+}
+
+struct SizedRectangle {
+    @SmallNumber var height: Int
+    @SmallNumber var width: Int
+
+    mutating func resize(to size: SizeVariation) -> Bool {
+        switch size {
+        case .small:
+            height = 10
+            width = 20
+        case .large:
+            height = 100
+            width = 100
+        }
+        // return $height || $width // TODO: - Cannot find '$height' in scope
+        return true                 // TODO: - remove after fixing
+    }
+}
+
+/** GLOBAL AND LOCAL VARIABLES **/
+func someFunction() {
+    @SmallNumber var myNumber: Int = 0
+    
+    myNumber = 10
+    
+    myNumber = 24
+}
+
+// TYPE PROPERTIES
+// We can define properties that belong to the type itself, not to any instance
+// of that type. There will be only one copy of these properties.
+
+// TYPE PROPERTY SYNTAX
+// For computed type properties for class types, you can use the class keyword
+// instead to allow subclasses to override the superclass’s implementation.
+struct SomeDifferentStructure {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 1
+    }
+}
+enum SomeDifferentEnumeration {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 6
+    }
+}
+class SomeDifferentClass {
+    static var storedTypeProperty = "Some value."
+    static var computedTypeProperty: Int {
+        return 27
+    }
+    class var overrideableComputedTypeProperty: Int {
+        return 107
+    }
+}
+
+// QUERYING AND SETTING TYPE PROPERTIES
+// Type properties are queried and set on the type, not on an instance of that type:
+print(SomeDifferentStructure.storedTypeProperty)
+SomeDifferentStructure.storedTypeProperty = "Another value."
+print(SomeDifferentStructure.storedTypeProperty)
+print(SomeDifferentEnumeration.computedTypeProperty)
+print(SomeDifferentClass.computedTypeProperty)
+
+struct AudioChannel {
+    static let thresholdLevel = 10
+    static var maxInputLevelForAllChannels = 0
+    var currentLevel: Int = 0 {
+        didSet {
+            if currentLevel > AudioChannel.thresholdLevel {
+                currentLevel = AudioChannel.thresholdLevel
+            }
+            if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                AudioChannel.maxInputLevelForAllChannels = currentLevel
+            }
+        }
+    }
+}
+
+var leftChannel = AudioChannel()
+var rightChannel = AudioChannel()
+
+leftChannel.currentLevel = 7
+rightChannel.currentLevel = 11
+print(leftChannel.currentLevel)
+print(AudioChannel.maxInputLevelForAllChannels)
