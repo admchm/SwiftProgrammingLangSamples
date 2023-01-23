@@ -31,4 +31,17 @@ func listPhotos(inGallery: name) async -> [String] {
 // For a function or method that's both asynchronous and throwing, we write
 // async before throws.
 
+// When calling an asynchronous method, execution suspends until the method
+// returns. You write await in front of the call to mark the possible
+// suspension point.
+// Inside an asynchronous method, the flow of execution is suspended only
+// when you call another asynchronous method. Suspension is never implicit.
+// Every possible suspension point is marked with await.
 
+/*
+let photoNames = await listPhotos(inGallery: "Summer Vacation")
+let sortedNames = photoNames.sorted()
+let name = sortedNames[0]
+let photo = await downloadPhoto(named: name)
+show(photo)
+*/
