@@ -121,11 +121,132 @@ struct PurchasedSnack {
 let purchasedSnack = try PurchasedSnack(name: "Pretzels", vendingMachine: someVendingMachine)
 print(someVendingMachine.coinsDeposited)
 
-
 // HANDLING ERRORS USING DO-CATCH
+// You use a do-catch statement to handle errors by running a block of code. If an
+// error is thrown by the code in the do clause, it’s matched against the catch
+// clauses to determine which one of them can handle the error.
+
+/*
+do {
+    try expression
+    statements
+} catch pattern 1 {
+    statements
+} catch pattern 2 where condition {
+    statements
+} catch pattern 3, pattern 4 where condition {
+    statements
+} catch {
+    statements
+}
+*/
+
+var anotherVendingMachine = VendingMachine()
+anotherVendingMachine.coinsDeposited = 8
+
+do {
+    try buyFavoriteSnack(person: "Adam", vendingMachine: anotherVendingMachine)
+    print("Success! Yum.")
+} catch VendingMachineError.invalidSelection {
+    print("Invalid selection.")
+} catch VendingMachineError.outOfStock {
+    print("Out of stock.")
+} catch VendingMachineError.insufficientFunds(let coinsNeeded) {
+    print("Insufficient funds. Please insert an additional \(coinsNeeded) coins.")
+} catch {
+    // If a catch clause doesn’t have a pattern, the clause matches any error and
+    // binds the error to a local constant named error.
+    print("Unexpected error: \(error)")
+}
+
+
+func nourish(with item: String) throws {
+    do {
+        try anotherVendingMachine.vend(itemName: item)
+    } catch is VendingMachineError {
+        print("Couldn't buy that from the vending machine.")
+    }
+}
+
+do {
+    try nourish(with: "Beet-Flavored Chips")
+} catch {
+    print("Unexpected non-vending-machine-related error : \(error)")
+}
+
+
+func eat(item: String) throws {
+    do {
+        try anotherVendingMachine.vend(itemName: item)
+    } catch VendingMachineError.outOfStock,
+            VendingMachineError.invalidSelection,
+            VendingMachineError.insufficientFunds {
+        print("Out of stock or invalid selection or insufficient funds")
+    }
+}
 
 // CONVERTING ERRORS TO OPTIONAL VALUES
+// We use 'try?' by converting it to an optional value. If an error is thrown
+// while evaluating the try? expression the value of the expression is nil.
+
+func someThrowingFunction() throws -> Int {
+    // ...
+    return Int()
+}
+
+let x = try? someThrowingFunction()
+
+let y: Int?
+
+do {
+    y = try someThrowingFunction()
+} catch {
+    y = nil
+}
+
+// Using try? lets you write concise error handling code when you want to
+// handle all errors in the same way.
+
+/*
+func fetchData() -> Data? {
+    if let data = try? fetchDataFromDisk() { return data }
+    if let data = try? fetchDataFromServer() { return data }
+    
+    return nil
+}
+*/
 
 // DISABLING ERROR PROPAGATION
+// Sometimes we know a throwing function won't throw an error. On those
+// occasions, we can write 'try!' before the expression to disable error
+// propagation and assert that no error will be thrown.
+
+/*
+let photo = try! loadImage(at: "./Resources/JohnAppleseed.jpg")
+*/
+
 
 /** SPECIFYING CLEANUP ACTIONS  **/
+// You use a defer statement to execute a set of statements just before code
+// execution leaves the current block of code.
+// This statement lets you do any necessary cleanup that should be performed
+// regardless of how execution leaves the current block of code.
+// A defer statement defers execution until the current scope is exited.
+
+// Deferred actions are executed in the reverse of the order that they’re
+// written in your source code.
+
+/*
+func processFiles(filename: String) throws {
+    if exists(filename) {
+        let file = open(filename)
+        defer {
+            close(file)
+        }
+        while let line = try file.readline() {
+            // work with the file
+        }
+        // close(file) is called here, at the end of the scope
+    }
+}
+*/
