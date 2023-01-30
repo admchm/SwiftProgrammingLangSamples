@@ -18,6 +18,8 @@
 		46D829E029812110005D7F42 /* 20_Type_Casting.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 20_Type_Casting.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46D829E129812128005D7F42 /* 21_Nested_types.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 21_Nested_types.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46D829E229812144005D7F42 /* 22_Extensions.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 22_Extensions.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46D829E32987F413005D7F42 /* 15_Initialization.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 15_Initialization.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46D829E42987F43D005D7F42 /* 16_Deinitialization.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 16_Deinitialization.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46F5BA672965B09500DEEFC4 /* 5_Collection_Types.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 5_Collection_Types.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46F5BA692966C2A900DEEFC4 /* 6_Control_flow.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 6_Control_flow.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46F5BA6A296D5D6500DEEFC4 /* 7_Functions.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 7_Functions.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -33,6 +35,8 @@
 		CFFC98F0286AD7C0009F199C = {
 			isa = PBXGroup;
 			children = (
+				46D829E42987F43D005D7F42 /* 16_Deinitialization.playground */,
+				46D829E32987F413005D7F42 /* 15_Initialization.playground */,
 				CFFC98F7286AD802009F199C /* 1_Welcome_to_Swift.playground */,
 				CF11A2FC2906BDBF00A9514A /* 2_The_Basics.playground */,
 				CFAF28BF2912BD09004D2AD7 /* 3_Basic_Operators.playground */,
