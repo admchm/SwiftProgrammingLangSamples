@@ -1,3 +1,5 @@
 import UIKit
 
-var greeting = "Hello, playground"
+/** HOW DEINITIALIZATION WORKS **/
+
+/** DEINITIALIZERS IN ACTION **/
