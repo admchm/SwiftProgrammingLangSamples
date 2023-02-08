@@ -155,26 +155,86 @@ struct Rect {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 /** CLASS INHERITANCE AND INITIALIZATION **/
-// DESIGNATED INITIALIZERS AND CONVENIENCEINITIALIZERS
+
+// Swift defines two kinds of initializers for class types to help ensure all stored
+// properties receive an initial value. These are known as designated initializers
+// and convenience initializers.
+
+// DESIGNATED INITIALIZERS AND CONVENIENCE INITIALIZERS
+
+// Designated initializers are the primary initializers for a class.
+// Convenience initializers are secondary, supporting initializers for a class.
+
 // SYNTAX FOR DESIGNATED AND CONVENIENCE INITIALIZERS
+
+// Designated initializer syntax:
+/*
+init(parameters) {
+    statements
+}
+*/
+
+// Convinience initializer syntax:
+/*
+convinience init(parameters) {
+    statements
+}
+*/
+
 // INITIALIZER DELEGATION FOR CLASS TYPES
+
+// Swift applies the following three rules for delegation calls between initializers:
+// - Rule #1:
+//      designated initializer must call a designated initializer from its immediate
+//      superclass.
+// - Rule #2:
+//      convenience initializer must call another initializer from the same class.
+// - Rule #3:
+//      convenience initializer must ultimately call a designated initializer.
+
 // TWO-PHASE INITIALIZATION
+
 // INITIALIZER INHERITANCE AND OVERRIDING
+
+class Vehicle {
+    var numberOfWheels = 0
+    var description: String {
+        return "\(numberOfWheels) wheel(s)"
+    }
+}
+
+let vehicle = Vehicle()
+print("Vehicle: \(vehicle.description)")
+
+class Bicycle: Vehicle {
+    override init() {
+        // If the superclass’s initializer is asynchronous,
+        // we need to write await super.init() explicitly.
+        super.init()
+        numberOfWheels = 2
+    }
+}
+
+let bicycle = Bicycle()
+print("Bicycle: \(bicycle.description)")
+
 // AUTOMATIC INITIALIZER INHERITANCE
+
+// Assuming that you provide default values for any new properties you introduce
+// in a subclass, the following two rules apply:
+
+// - Rule #1: If our subclass doesn’t define any designated initializers, it
+//            automatically inherits all of its superclass designated initializers.
+
+// - Rule #2: If our subclass provides an implementation of all of its superclass
+//            designated initializers—either by inheriting them as per rule 1, or by
+//            providing a custom implementation as part of its definition—then it
+//            automatically inherits all of the superclass convenience initializers.
+
 // DESIGNATED AND CONVENIENCE INITIALIZERS IN ACTION
+
+
 
 /** FAILABLE INITIALIZERS **/
 // FAILABLE INITIALIZERS FOR ENUMERATIONS
