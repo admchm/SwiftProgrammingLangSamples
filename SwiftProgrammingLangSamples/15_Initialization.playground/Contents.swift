@@ -234,17 +234,282 @@ print("Bicycle: \(bicycle.description)")
 
 // DESIGNATED AND CONVENIENCE INITIALIZERS IN ACTION
 
+class Food {
+    var name: String
+    
+    init(name: String) {
+        self.name = name
+    }
+    
+    convenience init() {
+        self.init(name: "[Unnamed]")
+    }
+}
 
+var namedMeat = Food()
+print("namedMeat = \(namedMeat.name)")
+
+namedMeat = Food(name: "Bacon")
+
+class RecipeIngredient: Food {
+    var quantity: Int
+    
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
+}
+
+let oneMysteryItem = RecipeIngredient()
+let oneBacon = Food(name: "Bacon")
+let sixEggs = RecipeIngredient(name: "Eggs", quantity: 6)
+
+class ShoppingListItem: RecipeIngredient {
+    var purchased = false
+    var description: String {
+        var output = "\(quantity) x \(name)"
+        output += purchased ? " ✔" : " ✘"
+        return output
+    }
+}
+
+var breakfastList = [
+    ShoppingListItem(),
+    ShoppingListItem(name: "Bacon"),
+    ShoppingListItem(name: "Eggs", quantity: 6),
+]
+
+breakfastList[0].name = "Orange juice"
+breakfastList[0].purchased = true
+
+for item in breakfastList {
+    print(item.description)
+}
 
 /** FAILABLE INITIALIZERS **/
+
+// To define a failable initializer, we need to place a question mark after
+// the init keyword (init?)
+// We cannot define a failable and a nonfailable initializer with the same
+// parameter types and names.
+// We write return nil within a failable initializer to indicate a point at
+// which initialization failure can be triggered.
+// A main role of the failable initializer is to ensure that self is fully
+// and correctly initialized.
+
+let wholeNumber: Double = 12345.0
+let pi = 3.14159
+
+if let valueMaintained = Int(exactly: wholeNumber) {
+    print("\(wholeNumber) conversion to Int maintains value of \(valueMaintained)")
+}
+
+let valueChanged = Int(exactly: pi)
+// valueChanged is of type Int?, not Int
+
+if valueChanged == nil {
+    print("\(pi) conversion to Int doesn't maintain value")
+}
+
+struct Animal {
+    let species: String
+    init?(species: String) {
+        if species.isEmpty { return nil }
+        self.species = species
+    }
+}
+
+let someCreature = Animal(species: "Giraffe")
+// someCreate is of type Animal?, not Animal
+
+if let giraffe = someCreature {
+    print("An animal was initialized with a species of \(giraffe.species)")
+}
+
+let anonymousCreature = Animal(species: "")
+if anonymousCreature == nil {
+    print("The anonymousCreature couldn't be initialized.")
+}
+
 // FAILABLE INITIALIZERS FOR ENUMERATIONS
+
+enum TemperatureUnit {
+    case kelvin, celsius, fahrenheit
+    init?(symbol: Character) {
+        switch symbol {
+        case "K":
+            self = .kelvin
+        case "C":
+            self = .celsius
+        case "F":
+            self = .fahrenheit
+        default:
+            return nil
+        }
+    }
+}
+
+let fahrenheitUnit = TemperatureUnit(symbol: "F")
+if fahrenheitUnit != nil {
+    print("This is a defined temperature unit, so initialization succeeded.")
+}
+
+let unknownUnit = TemperatureUnit(symbol: "X")
+if unknownUnit == nil {
+    print("This isn't a defined temperature unit, so initialization failed.")
+}
+
 // FAILABLE INITIALIZERS FOR ENUMERATIONS WITH RAW VALUES
+
+enum TemperatureUnitRaw: Character {
+    case kelvin = "K", celsius = "C", fahrenheit = "F"
+}
+
+let fahrenheitUnitRaw = TemperatureUnitRaw(rawValue: "F")
+if fahrenheitUnitRaw != nil {
+    print("This is a defined temperature unit, so initialization succeeded.")
+}
+
+let unknownUnitRaw = TemperatureUnitRaw(rawValue: "X")
+if unknownUnitRaw == nil {
+    print("This isn't a defined temperature unit, so initialization failed.")
+}
+
 // PROPAGATION OF INITIALIZATION FAILURE
+
+class Product {
+    let name: String
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+}
+
+class CartItem: Product {
+    let quantity: Int
+    init?(name: String, quantity: Int) {
+        if quantity < 1 { return nil }
+        self.quantity = quantity
+        super.init(name: name)
+    }
+}
+
+if let twoSocks = CartItem(name: "sock", quantity: 2) {
+    print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+}
+
+if let zeroShirts = CartItem(name: "shirt", quantity: 0) {
+    print("Item: \(zeroShirts.name), quantity: \(zeroShirts.quantity)")
+} else {
+    print("Unable to initialize zero shirts")
+}
+
+if let oneUnnamed = CartItem(name: "", quantity: 1) {
+    print("Item: \(oneUnnamed.name), quantity: \(oneUnnamed.quantity)")
+} else {
+    print("Unable to initialize one unnamed product")
+}
+
 // OVERRIDING A FAILABLE INITIALIZER
+
+class Document {
+    var name: String?
+    // this initializer creates a document with a nil name value
+    init() {}
+    // this initializer creates a document with a nonempty name value
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+}
+
+class AutomaticallyNamedDocument: Document {
+    override init() {
+        super.init()
+        self.name = "[Untitled]"
+    }
+    override init(name: String) {
+        super.init()
+        if name.isEmpty {
+            self.name = "[Untitled]"
+        } else {
+            self.name = name
+        }
+    }
+}
+
+class UntitledDocument: Document {
+    override init() {
+        super.init(name: "[Untitled]")!
+    }
+}
+
 // THE INIT! FAILABLE INITIALIZER
+// Alternatively, we can define a failable initializer that creates an implicitly
+// unwrapped optional instance of the appropriate type. Do this by placing an
+// exclamation point after the init keyword (init!) instead of a question mark.
 
 /** REQUIRED INITIALIZERS **/
 
+// Write the required modifier before the definition of a class initializer to
+// indicate that every subclass of the class must implement that initializer.
+
+class SomeClass {
+    required init() {
+        // initializer implementation goes here
+    }
+}
+
+// We must also write the required init write the required modifier before every
+// subclass implementation of a requred initializer. We don' write override
+// keyword in this case.
+class SomeSubclass: SomeClass {
+    required init() {
+        // subclass implmentation of the required initializer goes here
+    }
+}
+
+// We don’t have to provide an explicit implementation of a required initializer
+// if you can satisfy the requirement with an inherited initializer.
+
 /** SETTING A DEFAULT PROPERTY VALUE WITH A CLOSURE OR FUNCTION **/
+/*
+class SomeNewClass {
+    let someProperty: SomeType = {
+        // create a default value for someProperty inside this closure
+        // someValue must be of the same type as SomeType
+        return someValue
+    }()
+}
+*/
 
+// Note that the closure’s end curly brace is followed by an empty pair of parentheses.
+// This tells Swift to execute the closure immediately. If we omit these parentheses,
+// we are trying to assign the closure itself to the property, and not the return value
+// of the closure.
+struct Chessboard {
+    let boardColors: [Bool] = {
+        var temporaryBoard: [Bool] = []
+        var isBlack = false
+        for i in 1...8 {
+            for j in 1...8 {
+                temporaryBoard.append(isBlack)
+                isBlack = !isBlack
+            }
+            isBlack = !isBlack
+        }
+        return temporaryBoard
+    }()
+    
+    func squareIsBlackAt(row: Int, column: Int) -> Bool {
+        return boardColors[(row * 8) + column]
+    }
+}
 
+let board = Chessboard()
+print(board.squareIsBlackAt(row: 0, column: 1))
+print(board.squareIsBlackAt(row: 7, column: 7))
