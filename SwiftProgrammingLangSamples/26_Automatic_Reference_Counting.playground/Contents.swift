@@ -171,3 +171,123 @@ department.courses = [intro, intermediate, advanced]
 // neither property should ever be nil once initialization is complete. In this scenario,
 // it’s useful to combine an unowned property on one class with an implicitly unwrapped
 // optional property on the other class.
+class Country {
+    let name: String
+    var capitalCity: City!
+    init(name: String, capitalName: String) {
+        self.name = name
+        self.capitalCity = City(name: capitalName, country: self)
+    }
+}
+
+class City {
+    let name: String
+    unowned let country: Country
+    init(name: String, country: Country) {
+        self.name = name
+        self.country = country
+    }
+}
+
+var country = Country(name: "Canada", capitalName: "Ottawa")
+print("\(country.name)'s capital city is called \(country.capitalCity.name)")
+
+/** STRONG REFERENCE CYCLES FOR CLOSURES **/
+
+// A strong reference cycle can also occur if we assign a closure to a property
+// of a class instance and the body of that closure captures the instance.
+// Closure capture list is an elegant solution to this problem.
+
+class HTMLElementBroken {
+    let name: String
+    let text: String?
+    
+    lazy var asHTML: () -> String = {
+        if let text = self.text {
+            return "<\(self.name)>\(text)</\(self.name)>"
+        } else {
+            return "<\(self.name) />"
+        }
+    }
+    
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
+    
+    deinit {
+        print("\(name) is being deinitialized")
+    }
+}
+
+let heading = HTMLElementBroken(name: "h1")
+let defaultText = "some default text"
+
+heading.asHTML = {
+    return "<\(heading.name)\(heading.text ?? defaultText)</\(heading.name)>"
+}
+
+var paragraph: HTMLElementBroken? = HTMLElementBroken(name: "p", text: "hello, world")
+print(paragraph!.asHTML())
+
+paragraph = nil
+
+/** RESOLVING STRONG REFERENCE CYCLES FOR CLOSURES **/
+
+// Swift requires you to write self.someProperty or self.someMethod() (rather than
+// just someProperty or someMethod()) whenever you refer to a member of self within
+// a closure. This helps you remember that it’s possible to capture self by accident.
+
+// DEFINING A CAPTURE LIST
+
+/*
+lazy var someClosure = {
+    [unowned self, weak delegate = self.delegate]
+    (index: Int, stringToProcess: String) -> String in
+    // closure body goes here
+}
+*/
+
+// if a closure doesn't specify a parameter list or return type:
+/*
+lazy var someClosure = {
+    [unowned self, weak delegate = self.delegate] in
+    // closure body goes here
+}
+*/
+
+// WEAK AND UNOWNED REFERENCES
+
+// Define a capture in a closure as an unowned reference when the closure and the
+// instance it captures will always refer to each other, and will always be
+// deallocated at the same time. Conversely, define a capture as a weak reference
+// when the captured reference may become nil at some point in the future.
+
+class HTMLElement {
+    
+    let name: String
+    let text: String?
+    
+    lazy var asHTML: () -> String = {
+        [unowned self] in
+        if let text = self.text {
+            return "<\(self.name)>\(text)</\(self.name)>"
+        } else {
+            return "<\(self.name) />"
+        }
+    }
+    
+    init(name: String, text: String? = nil) {
+        self.name = name
+        self.text = text
+    }
+    
+    deinit {
+        print("\(name) is being deinitialized")
+    }
+}
+
+var newParagraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
+print(newParagraph!.asHTML())
+
+newParagraph = nil
