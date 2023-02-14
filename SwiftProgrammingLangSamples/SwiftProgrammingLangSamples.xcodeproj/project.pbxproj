@@ -12,7 +12,8 @@
 		46C9FCBB29952930007A42DC /* 25_Opaque_Types.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 25_Opaque_Types.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46C9FCBC29952991007A42DC /* 26_Automatic_Reference_Counting.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 26_Automatic_Reference_Counting.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46C9FCBD299529A7007A42DC /* 27_Memory_Safety.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 27_Memory_Safety.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		46C9FCBE299529DA007A42DC /* 28_Advanced_Operators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 28_Advanced_Operators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46C9FCBE299529DA007A42DC /* 29_Advanced_Operators.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 29_Advanced_Operators.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		46CA17CE299A4C0E00465330 /* 28_Access_control.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 28_Access_control.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46D829D829753616005D7F42 /* 10_Structures_and_Classes.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 10_Structures_and_Classes.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46D829D929753633005D7F42 /* 11_Properties.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 11_Properties.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		46D829DA2975365E005D7F42 /* 12_Methods.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = 12_Methods.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -41,14 +42,6 @@
 		CFFC98F0286AD7C0009F199C = {
 			isa = PBXGroup;
 			children = (
-				46C9FCB929952907007A42DC /* 23_Protocols.playground */,
-				46C9FCBA29952917007A42DC /* 24_Generics.playground */,
-				46C9FCBB29952930007A42DC /* 25_Opaque_Types.playground */,
-				46C9FCBC29952991007A42DC /* 26_Automatic_Reference_Counting.playground */,
-				46C9FCBD299529A7007A42DC /* 27_Memory_Safety.playground */,
-				46C9FCBE299529DA007A42DC /* 28_Advanced_Operators.playground */,
-				46D829E42987F43D005D7F42 /* 16_Deinitialization.playground */,
-				46D829E32987F413005D7F42 /* 15_Initialization.playground */,
 				CFFC98F7286AD802009F199C /* 1_Welcome_to_Swift.playground */,
 				CF11A2FC2906BDBF00A9514A /* 2_The_Basics.playground */,
 				CFAF28BF2912BD09004D2AD7 /* 3_Basic_Operators.playground */,
@@ -63,12 +56,21 @@
 				46D829DA2975365E005D7F42 /* 12_Methods.playground */,
 				46D829DB2975368B005D7F42 /* 13_Subscripts.playground */,
 				46D829DC297536A8005D7F42 /* 14_Inheritance.playground */,
+				46D829E32987F413005D7F42 /* 15_Initialization.playground */,
+				46D829E42987F43D005D7F42 /* 16_Deinitialization.playground */,
 				46D829DE298120DC005D7F42 /* 17_Optional_chaining.playground */,
 				46D829DF298120F5005D7F42 /* 18_Error_handling.playground */,
 				46D829DD29793767005D7F42 /* 19_Concurrency.playground */,
 				46D829E029812110005D7F42 /* 20_Type_Casting.playground */,
 				46D829E129812128005D7F42 /* 21_Nested_types.playground */,
 				46D829E229812144005D7F42 /* 22_Extensions.playground */,
+				46C9FCB929952907007A42DC /* 23_Protocols.playground */,
+				46C9FCBA29952917007A42DC /* 24_Generics.playground */,
+				46C9FCBB29952930007A42DC /* 25_Opaque_Types.playground */,
+				46C9FCBC29952991007A42DC /* 26_Automatic_Reference_Counting.playground */,
+				46C9FCBD299529A7007A42DC /* 27_Memory_Safety.playground */,
+				46CA17CE299A4C0E00465330 /* 28_Access_control.playground */,
+				46C9FCBE299529DA007A42DC /* 29_Advanced_Operators.playground */,
 			);
 			sourceTree = "<group>";
 		};
