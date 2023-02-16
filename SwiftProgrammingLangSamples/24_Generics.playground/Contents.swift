@@ -253,3 +253,144 @@ extension IntStack: SuffixableContainer {
 */
 
 /** GENERIC WHERE CLAUSES **/
+
+func allItemsMatch<C1: Container, C2: Container>
+    (_ someContainer: C1, _ anotherContainer: C2) -> Bool
+    where C1.Item == C2.Item, C1.Item: Equatable {
+
+        // Check that both containers contain the same number of items.
+        if someContainer.count != anotherContainer.count {
+            return false
+        }
+
+        // Check each pair of items to see if they're equivalent.
+        for i in 0..<someContainer.count {
+            if someContainer[i] != anotherContainer[i] {
+                return false
+            }
+        }
+
+        // All items match, so return true.
+        return true
+}
+
+/*
+var stackOfStringsNew = Stack<String>()
+stackOfStringsNew.push("uno")
+stackOfStringsNew.push("dos")
+stackOfStringsNew.push("tres")
+
+var arrayOfStrings = ["uno", "dos", "tres"]
+
+if allItemsMatch(stackOfStrings, arrayOfStrings) {
+    print("All items match.")
+} else {
+    print("Not all items match.")
+}
+*/
+
+/** EXTENSIONS WITH A GENERIC WHERE CLAUSE **/
+extension Stack where Element: Equatable {
+    func isTop(_ item: Element) -> Bool {
+        guard let topItem = items.last else {
+            return false
+        }
+        return topItem == item
+    }
+}
+
+if stackOfStrings.isTop("tres") {
+    print("Top element is tres.")
+} else {
+    print("Top element is something else.")
+}
+
+struct NotEquatable { }
+var notEquatableStack = Stack<NotEquatable>()
+let notEquatableValue = NotEquatable()
+notEquatableStack.push(notEquatableValue)
+// notEquatableStack.isTop(notEquatableValue)  // Error - Referencing instance method 'isTop' on 'Stack' requires that 'NotEquatable' conform to 'Equatable'
+
+extension Container where Item: Equatable {
+    func startsWith(_ item: Item) -> Bool {
+        return count >= 1 && self[0] == item
+    }
+}
+
+/*
+if [9, 9, 9].startsWith(42) {
+    print("Starts with 42.")
+} else {
+    print("Starts with something else.")
+}
+*/
+
+extension Container where Item == Double {
+    func average() -> Double {
+        var sum = 0.0
+        for index in 0..<count {
+            sum += self[index]
+        }
+        return sum / Double(count)
+    }
+}
+// print([1260.0, 1200.0, 98.6, 37.0].average())
+
+/** CONTEXTUAL WHERE CLAUSES **/
+
+extension Container {
+    func average() -> Double where Item == Int {
+        var sum = 0.0
+        for index in 0..<count {
+            sum += Double(self[index])
+        }
+        return sum / Double(count)
+    }
+    
+    func endsWith(_ item: Item) -> Bool where Item: Equatable {
+        return count >= 1 && self[count-1] == item
+    }
+}
+let numbers = [1260, 1200, 98, 37]
+// print(numbers.average())
+// print(numbers.endsWith(37))
+
+extension Container where Item == Int {
+    func averageVariant() -> Double {
+        var sum = 0.0
+        for index in 0..<count {
+            sum += Double(self[index])
+        }
+        return sum / Double(count)
+    }
+}
+
+extension Container where Item: Equatable {
+    func endsWithVariant(_ item: Item) -> Bool {
+        return count >= 1 && self[count-1] == item
+    }
+}
+
+/** ASSOCIATED TYPES WITH A GENERIC WHERE CLAUSE **/
+
+protocol AnotherContainer {
+    associatedtype Item
+    mutating func append(_ item: Item)
+    var count: Int { get }
+    subscript(i: Int) -> Item { get }
+
+    associatedtype Iterator: IteratorProtocol where Iterator.Element == Item
+    func makeIterator() -> Iterator
+}
+
+/** GENERIC SUBSCRIPTS **/
+extension Container {
+    subscript<Indices: Sequence>(indices: Indices) -> [Item]
+        where Indices.Iterator.Element == Int {
+            var result: [Item] = []
+            for index in indices {
+                result.append(self[index])
+            }
+            return result
+    }
+}
