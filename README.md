@@ -22,20 +22,27 @@ This repository consists of a set of playgrounds that I wrote during reading the
 - 12 - Methods ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/12_Methods.playground/Contents.swift))
 - 13 - Subscripts ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/13_Subscripts.playground/Contents.swift))
 - 14 - Inheritance ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/14_Inheritance.playground/Contents.swift))
-- 15 - Initialization (...)
-- 16 - Deinitialization (...)
+- 15 - Initialization ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/15_Initialization.playground/Contents.swift))
+- 16 - Deinitialization ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/16_Deinitialization.playground/Contents.swift))
 - 17 - Optional Chaining ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/17_Optional_chaining.playground/Contents.swift))
 - 18 - Error Handling ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/18_Error_handling.playground/Contents.swift))
 - 19 - Concurrency ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/19_Concurrency.playground/Contents.swift))
 - 20 - Type Casting ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/20_Type_Casting.playground/Contents.swift))
 - 21 - Nested Types ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/21_Nested_types.playground/Contents.swift))
 - 22 - Extensions ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/22_Extensions.playground/Contents.swift))
-- 23 - Protocols (...)
-- 24 - Generics (...)
-- 25 - Opaque Types (...)
-- 26 - Automatic Reference Counting (...)
-- 27 - Memory Safety (...)
-- 28 - Access Control (...)
-- 29 - Advanced Operators (...)
-
-> **Note:** "(...)" means that the chapter hasn't been completed, so the link doesn't exist.
+- 23 - Protocols ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/23_Protocols.playground/Contents.swift))
+- 24 - Generics ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/24_Generics.playground/Contents.swift))
+- 25 - Opaque Types ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/25_Opaque_Types.playground/Contents.swift))
+- 26 - Automatic Reference Counting ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/26_Automatic_Reference_Counting.playground/Contents.swift))
+- 27 - Memory Safety ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/27_Memory_Safety.playground/Contents.swift))
+- 28 - Access Control ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/28_Access_control.playground/Contents.swift))
+- 29 - Advanced Operators ([link]
+(https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/29_Advanced_Operators.playground/Contents.swift))
