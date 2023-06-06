@@ -7,7 +7,7 @@ This repository consists of a set of playgrounds that I wrote during reading the
 > **Note:** These samples are based on **Swift 5.7**.
 
 
-## Create files and folders
+## Chapters
 
 - 1  - Welcome to Swift ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/1_Welcome_to_Swift.playground/Contents.swift))
 - 2  - The Basics ([link](https://github.com/admchm/SwiftProgrammingLangSamples/blob/main/SwiftProgrammingLangSamples/2_The_Basics.playground/Contents.swift))
